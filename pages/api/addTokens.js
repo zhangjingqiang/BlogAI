@@ -3,10 +3,6 @@ import stripeInit from "stripe";
 
 const stripe = stripeInit(process.env.STRIPE_SECRET_KEY);
 
-export const config = {
-  runtime: "edge",
-};
-
 export default async function handler(req, res) {
   const { user } = await getSession(req, res);
 

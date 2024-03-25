@@ -11,7 +11,6 @@ export const config = {
   api: {
     bodyParser: false,
   },
-  runtime: "edge",
 };
 
 const stripe = stripeInit(process.env.STRIPE_SECRET_KEY);

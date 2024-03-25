@@ -2,10 +2,6 @@ import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { ObjectId } from "mongodb";
 import clientPromise from "../../lib/mongodb";
 
-export const config = {
-  runtime: "edge",
-};
-
 export default withApiAuthRequired(async function handler(req, res) {
   try {
     const {
