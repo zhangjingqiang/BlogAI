@@ -1,5 +1,9 @@
-import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
-import clientPromise from '../../lib/mongodb';
+import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
+import clientPromise from "../../lib/mongodb";
+
+export const config = {
+  runtime: "edge",
+};
 
 export default withApiAuthRequired(async function handler(req, res) {
   try {
@@ -7,18 +11,18 @@ export default withApiAuthRequired(async function handler(req, res) {
       user: { sub },
     } = await getSession(req, res);
     const client = await clientPromise;
-    const db = client.db('BlogAI');
-    const userProfile = await db.collection('users').findOne({
+    const db = client.db("BlogAI");
+    const userProfile = await db.collection("users").findOne({
       auth0Id: sub,
     });
 
     const { lastPostDate, getNewerPosts } = req.body;
 
     const posts = await db
-      .collection('posts')
+      .collection("posts")
       .find({
         userId: userProfile._id,
-        created: { [getNewerPosts ? '$gt' : '$lt']: new Date(lastPostDate) },
+        created: { [getNewerPosts ? "$gt" : "$lt"]: new Date(lastPostDate) },
       })
       .limit(getNewerPosts ? 0 : 5)
       .sort({ created: -1 })
