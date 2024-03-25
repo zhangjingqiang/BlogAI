@@ -1,1 +1,1 @@
-# Blog AI
+# BlogAI
